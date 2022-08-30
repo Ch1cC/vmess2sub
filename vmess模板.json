@@ -1,0 +1,34 @@
+[
+    {
+        "v": "2",
+        "ps": "备注-1",
+        "add": "你的域名",
+        "port": "443",
+        "id": "你的UUID",
+        "aid": "0",
+        "scy": "auto",
+        "net": "h2",
+        "type": "none",
+        "host": "",
+        "path": "",
+        "tls": "tls",
+        "sni": "",
+        "alpn": ""
+    },
+    {
+        "v": "2",
+        "ps": "备注-2",
+        "add": "你的域名",
+        "port": "443",
+        "id": "你的UUID",
+        "aid": "0",
+        "scy": "auto",
+        "net": "grpc",
+        "type": "gun",
+        "host": "你的域名",
+        "path": "你的service name",
+        "tls": "tls",
+        "sni": "",
+        "alpn": ""
+    }
+]

@@ -29,7 +29,7 @@ type vmess struct {
 
 type user struct {
 	ID   string `json:"id"`
-	Name string `json:"name"`
+	Email string `json:"email"`
 }
 
 var (
@@ -58,7 +58,7 @@ func main() {
 		//字符串拼接
 		urlBuilder := strings.Builder{}
 		UUID := user.ID
-		name := user.Name
+		email := user.Email
 		for _, vmess := range vmesses {
 			vmess.ID = UUID
 			marshal, err := json.Marshal(vmess)
@@ -73,7 +73,7 @@ func main() {
 		vmessBuilder := urlBuilder.String()
 		//最后再base64一次符合小火箭订阅格式
 		toString := base64.URLEncoding.EncodeToString([]byte(vmessBuilder))
-		os.WriteFile("sub\\"+name, []byte(toString), 0644)
+		os.WriteFile("sub\\"+email, []byte(toString), 0644)
 	}
 	/*fmt.Println(toString)
 	clipboard.WriteAll(toString)

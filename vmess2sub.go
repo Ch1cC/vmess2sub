@@ -95,7 +95,7 @@ func main() {
 	os.Stdin.Read(b)
 }
 func toTrojan(n node) (str string) {
-	url := trojanProtocol + n.ID + "@" + n.Add + ":" + n.Port + "?security=tls&alpn=http%2F1.1&type=tcp&headerType=none#" + url2.QueryEscape(n.Ps)
+	url := trojanProtocol + n.ID + "@" + n.Add + ":" + n.Port + "?security=tls&alpn=h2%2Chttp%2F1.1&type=tcp&headerType=none#" + url2.QueryEscape(n.Ps)
 	return url
 }
 

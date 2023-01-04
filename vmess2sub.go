@@ -26,7 +26,7 @@ type node struct {
 	Path     string `json:"path"`
 	TLS      string `json:"tls"`
 	Sni      string `json:"sni"`
-	Alpn     string `json:"alpn"`
+	Alpn 	 string `json:"alpn"`
 }
 
 type user struct {
@@ -65,6 +65,7 @@ func main() {
 		for _, node := range nodes {
 			node.ID = UUID
 			protocol := node.Protocol
+			node.Alpn="h2,http/1.1"
 			marshal, err := json.Marshal(node)
 			if err == nil {
 				//每个对象都进行base64转换
@@ -75,6 +76,7 @@ func main() {
 					urlBuilder.WriteString("\n")
 				case "vmess":
 					vmess := string(marshal)
+					// fmt.Println(vmess)
 					base64Url := toVmess(vmess)
 					urlBuilder.WriteString(base64Url)
 					urlBuilder.WriteString("\n")

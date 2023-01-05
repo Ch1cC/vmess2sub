@@ -27,6 +27,8 @@ type node struct {
 	TLS      string `json:"tls"`
 	Sni      string `json:"sni"`
 	Alpn 	 string `json:"alpn"`
+	Udp      int `json:"udp"`
+	Mux      bool `json:"mux"`
 }
 
 type user struct {
@@ -66,8 +68,6 @@ func main() {
 			node.ID = UUID
 			protocol := node.Protocol
 			node.Alpn="h2,http/1.1"
-			marshal, err := json.Marshal(node)
-			if err == nil {
 				//每个对象都进行base64转换
 				switch protocol {
 				case "trojan":
@@ -75,13 +75,11 @@ func main() {
 					urlBuilder.WriteString(base64Url)
 					urlBuilder.WriteString("\n")
 				case "vmess":
-					vmess := string(marshal)
 					// fmt.Println(vmess)
-					base64Url := toVmess(vmess)
+					base64Url := toVmess(node)
 					urlBuilder.WriteString(base64Url)
 					urlBuilder.WriteString("\n")
 				}
-			}
 		}
 		vmessBuilder := urlBuilder.String()
 		//最后再base64一次符合小火箭订阅格式
@@ -96,13 +94,15 @@ func main() {
 	b := make([]byte, 1)
 	os.Stdin.Read(b)
 }
-func toTrojan(n node) (str string) {
+func toTrojan(n node) (base64Url string) {
 	url := trojanProtocol + n.ID + "@" + n.Add + ":" + n.Port + "?security=tls&alpn=h2%2Chttp%2F1.1&type=tcp&headerType=none#" + url2.QueryEscape(n.Ps)
 	return url
 }
 
-func toVmess(str string) (base64Url string) {
-	return vmessProtocol + base64.StdEncoding.EncodeToString([]byte(str))
+func toVmess(n node) (base64Url string) {
+	json, _ := json.Marshal(n)
+	vmess := string(json)
+	return vmessProtocol + base64.StdEncoding.EncodeToString([]byte(vmess))
 }
 
 func formatNodes() []node {
